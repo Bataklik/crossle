@@ -1,29 +1,35 @@
 import { useEffect, useState } from "react";
-import { CrossleService } from "../services/CrossleService";
+const useCrossle = (solution: string) => {
+    const BACKSPACE = "Backspace";
+    const ENTER = "Enter";
+    const [turn, setTurn] = useState(0);
+    const [currentGuess, setCurrentGuess] = useState("");
+    const [guesses, setGuesses] = useState<string[]>([]);
+    const [history, setHistory] = useState<string[]>([]);
+    const [isCorrect, setIsCorrect] = useState(false);
 
-export const useCrossle = () => {
-    const [alleWoorden, setAlleWoorden] = useState<string[]>([]);
-    const [geheimeWoorden, setGeheimeWoorden] = useState<string[]>([]);
-    useEffect(() => {
-        const fetchData = async () => {
-            await CrossleService.GetAlleWoorden().then((res) =>
-                setAlleWoorden(res.alle_woorden),
-            );
-            await CrossleService.GetHeimeWoorden().then((res) =>
-                setGeheimeWoorden(res.puzzel_woorden),
-            );
-        };
-        console.log(alleWoorden);
-        console.log(geheimeWoorden);
+    const formatGuess = (guess: string) => {};
 
-        fetchData();
-    }, []);
-    const getGeheimWoord = () => {
-        const rnd = Math.floor(Math.random() * geheimeWoorden.length);
-        const rndWord = geheimeWoorden[rnd];
-        console.log(rndWord);
-        return rndWord;
+    const addNewGuess = (guess: string) => {};
+
+    const handleKeyup = ({ key }: { key: string }) => {
+        if (key === BACKSPACE) {
+            setCurrentGuess((prev) => prev.slice(0, -1));
+            return;
+        }
+        if (!/^[a-zA-Z]$/.test(key)) return;
+        if (currentGuess.length > 5) return;
+        setCurrentGuess((prev) => prev + key);
+        console.log(currentGuess);
     };
 
-    return { alleWoorden, geheimeWoorden, getGeheimWoord };
+    return {
+        turn,
+        currentGuess,
+        guesses,
+        isCorrect,
+        handleKeyup,
+    };
 };
+
+export default useCrossle;
