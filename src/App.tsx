@@ -1,26 +1,38 @@
+import { useEffect, useState } from "react";
 import "./App.css";
-import { CrossleCell } from "./components/CrossleCell";
-import { CrossleRow } from "./components/CrossleRow";
-import { useCrossle } from "./hooks/useCrossle";
+import { Crossle } from "./components/Crossle";
 
 function App() {
-    const { alleWoorden, geheimeWoorden, getGeheimWoord } = useCrossle();
-    console.log(alleWoorden);
-    console.log(geheimeWoorden);
-    console.log(getGeheimWoord());
+    const [solution, setSolution] = useState(null);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            fetch(
+                "https://api-334903298972.us-central1.run.app/puzzel_woorden",
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                },
+            )
+                .then((response) => response.json())
+                .then((data) => data.puzzel_woorden)
+                .then((result) => {
+                    const randomIndex = Math.floor(
+                        Math.random() * result.length,
+                    );
+                    setSolution(result[randomIndex]);
+                });
+        };
+        fetchData();
+    }, [setSolution]);
     return (
         <section
             id="center"
             className="flex flex-col items-center justify-center"
         >
-            <div className="bg-grey-400">
-                <CrossleRow />
-            </div>
-
-            <div className="bg-blue-500">
-                <input className="w-full" name="text" />
-            </div>
+            {solution && <Crossle solution={solution} />}
         </section>
     );
 }
