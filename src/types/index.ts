@@ -5,3 +5,8 @@ export interface PuzzleWoorden {
 export interface AlleWoorden {
     alle_woorden: string[];
 }
+
+export type GuessType = {
+    key: string;
+    color: string;
+};
