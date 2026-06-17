@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import type { GuessType } from "../types";
 const useCrossle = (solution: string) => {
     const BACKSPACE = "Backspace";
     const ENTER = "Enter";
     const [turn, setTurn] = useState(0);
     const [currentGuess, setCurrentGuess] = useState("");
-    const [guesses, setGuesses] = useState<string[]>([]);
+    const [guesses, setGuesses] = useState<GuessType[][]>([...Array(6)]);
     const [history, setHistory] = useState<string[]>([]);
     const [isCorrect, setIsCorrect] = useState(false);
 
@@ -34,7 +35,19 @@ const useCrossle = (solution: string) => {
         return formattedGuess;
     };
 
-    const addNewGuess = (guess: string) => {};
+    const addNewGuess = (formattedGuess: GuessType[]) => {
+        if (currentGuess === solution) {
+            setIsCorrect(true);
+        }
+        setGuesses((prev) => {
+            const newGuesses = [...prev];
+            newGuesses[turn] = formattedGuess;
+            return newGuesses;
+        });
+        setHistory((prev) => [...prev, currentGuess]);
+        setTurn((prev) => prev + 1);
+        setCurrentGuess("");
+    };
 
     const handleKeyup = ({ key }: { key: string }) => {
         if (key === ENTER) {
@@ -51,7 +64,7 @@ const useCrossle = (solution: string) => {
                 return;
             }
             const formattedGuess = formatGuess();
-            console.log(formattedGuess);
+            addNewGuess(formattedGuess);
         }
         if (key === BACKSPACE) {
             setCurrentGuess((prev) => prev.slice(0, -1));
