@@ -32,6 +32,12 @@ const useCrossle = (solution: string) => {
                 solutionArray[solutionArray.indexOf(letter.key)] = null;
             }
         });
+
+        formattedGuess.forEach((letter, i) => {
+            const delay = (i + 1) * 250;
+            letter.color = `${letter.color} animate-[flip_0.6s_ease-in-out] [animation-delay:${delay}ms]`;
+        });
+
         return formattedGuess;
     };
 
