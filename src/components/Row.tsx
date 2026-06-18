@@ -20,6 +20,9 @@ export default function Row({ guess, currentGuess }: RowProps) {
                         key={index}
                         guess={letter.key}
                         color={letter.color}
+                        style={{
+                            animationDelay: `${(index + 1) * 250}ms`,
+                        }}
                     />
                 ))}
             </div>
