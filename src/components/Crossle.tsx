@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import useCrossle from "../hooks/useCrossle";
+import Grid from "./Grid";
 
 export function Crossle({ solution }: { solution: string }) {
     const { currentGuess, handleKeyup, guesses, isCorrect, turn } =
@@ -16,6 +17,7 @@ export function Crossle({ solution }: { solution: string }) {
         <div>
             <div>current guess: {currentGuess}</div>
             <div>solution guesses: {solution}</div>
+            <Grid currentGuess={currentGuess} guesses={guesses} turn={turn} />
         </div>
     );
 }
