@@ -1,1 +1,20 @@
 @import "tailwindcss";
+
+@keyframes flip {
+    0% {
+        transform: rotateX(0deg);
+        background: #fff;
+        border-color: #333;
+    }
+    45% {
+        transform: rotateX(90deg);
+        background: #fff;
+        border-color: #333;
+    }
+    55% {
+        transform: rotateX(90deg);
+    }
+    100% {
+        transform: rotateX(0deg);
+    }
+}
