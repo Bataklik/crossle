@@ -14,21 +14,21 @@ const useCrossle = (solution: string) => {
         console.log("current guess: ", currentGuess);
         const solutionArray: (string | null)[] = [...solution];
         const formattedGuess = [...currentGuess].map((letter) => {
-            return { key: letter, color: "grey" };
+            return { key: letter, color: "bg-gray-500" };
         });
 
         formattedGuess.forEach((letter, i) => {
             if (solutionArray[i] === letter.key) {
-                formattedGuess[i].color = "green";
+                formattedGuess[i].color = "bg-green-500";
                 solutionArray[i] = null;
             }
         });
         formattedGuess.forEach((letter, i) => {
             if (
                 solutionArray.includes(letter.key) &&
-                letter.color !== "green"
+                letter.color !== "bg-green-500"
             ) {
-                formattedGuess[i].color = "yellow";
+                formattedGuess[i].color = "bg-yellow-500";
                 solutionArray[solutionArray.indexOf(letter.key)] = null;
             }
         });
@@ -71,7 +71,7 @@ const useCrossle = (solution: string) => {
             return;
         }
         if (!/^[a-zA-Z]$/.test(key)) return;
-        if (currentGuess.length > 5) return;
+        if (currentGuess.length >= 5) return;
         setCurrentGuess((prev) => prev + key);
         console.log(currentGuess);
     };
